@@ -1,0 +1,24 @@
+# --- ETAPA 1: Compilación y Construcción ---
+FROM maven:3.9.6-eclipse-temurin-21 AS build
+WORKDIR /app
+
+# Copia primero los archivos de dependencias para aprovechar el caché de Docker
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copia el código fuente y compila omitiendo las pruebas para acelerar el build (o quita -DskipTests si quieres ejecutar tests en el contenedor)
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# --- ETAPA 2: Imagen de Ejecución (Ligera) ---
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+
+# Copia el JAR generado desde la etapa anterior
+COPY --from=build /app/target/*.jar app.jar
+
+# Expón el puerto configurado en tu application.properties (ej. 8081 según tu entorno)
+EXPOSE 8081
+
+# Ejecuta la aplicación habilitando soporte para carga dinámica de agentes en JDK 21 si fuera necesario
+ENTRYPOINT ["java", "-XX:+EnableDynamicAgentLoading", "-jar", "app.jar"]

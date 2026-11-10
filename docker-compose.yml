@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  pmng-back:
+    container_name: pmng-servicios
+    build:
+      context: ./service
+    environment:
+      DC_SERVER_PORT: ${ENV_SERVER_PORT}
+      DC_DB_HOST: ${ENV_DB_HOST}
+      DC_DB_PORT: ${ENV_DB_PORT}
+      DC_DB_NAME: ${ENV_DB_NAME}
+      DC_DB_USER: ${ENV_DB_USER}
+      DC_DB_PASS: ${ENV_DB_PASS}
+
+  pmng-front:
+    container_name: pmng-cliente
+
+networks:

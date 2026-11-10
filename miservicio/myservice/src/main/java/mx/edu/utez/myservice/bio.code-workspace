@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../../../../../../Videos/Captures/bio"
+		},
+		{
+			"path": "../../../../../../../../../../Videos/Captures/miweb"
+		},
+		{
+			"path": "../../../../../../../../../../Videos/Captures/calc"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "bio"
+	}
+}
